@@ -32,6 +32,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   network_interface_ids           = [azurerm_network_interface.this.id]
 
   os_disk {
+    name                 = "ubuntu-disk-${var.suffix}"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
