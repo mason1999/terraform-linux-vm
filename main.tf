@@ -44,3 +44,18 @@ resource "azurerm_linux_virtual_machine" "this" {
     version   = "latest"
   }
 }
+
+resource "azurerm_virtual_machine_extension" "example" {
+  count                = var.run_init_script == true ? 1 : 0
+  name                 = "ubuntu-init-script"
+  virtual_machine_id   = azurerm_linux_virtual_machine.this.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+ {
+  "script": "${base64encode(file("${path.module}/init.sh"))}"
+ }
+SETTINGS
+}

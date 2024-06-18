@@ -34,17 +34,19 @@ variable "private_ip_address" {
   description = "(Optional) The Static IP Address which should be used if private_ip_address_allocation is set to static."
 }
 
-# variable "name" {
-#   type        = string
-#   description = "(Required) The name of the Linux Virtual Machine. Changing this forces a new resource to be created."
-# }
-
 variable "admin_username" {
   type        = string
-  description = "(Required) The username of the local administrator used for the Virtual Machine. Changing this forces a new resource to be created."
+  description = "(Required) The username of the local administrator used for the Linux Virtual Machine. Changing this forces a new resource to be created."
 }
 
 variable "admin_password" {
   type        = string
-  description = "(Required) The Password which should be used for the local-administrator on this Virtual Machine. Changing this forces a new resource to be created."
+  description = "(Required) The Password which should be used for the local-administrator on this Linux Virtual Machine. Changing this forces a new resource to be created."
+}
+
+
+variable "run_init_script" {
+  type        = bool
+  description = "(Optional) Boolean flag to determine whether the Linux Virtual Machine should run the init script. Defaults to false. "
+  default     = false
 }
