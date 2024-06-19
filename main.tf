@@ -45,6 +45,14 @@ resource "azurerm_linux_virtual_machine" "this" {
   }
 }
 
+data "template_file" "init" {
+  count    = var.run_init_script == true ? 1 : 0
+  template = file("${path.module}/init.sh")
+  vars = {
+    OPTARG = ""
+  }
+}
+
 resource "azurerm_virtual_machine_extension" "example" {
   count                = var.run_init_script == true ? 1 : 0
   name                 = "ubuntu-init-script"
@@ -54,8 +62,8 @@ resource "azurerm_virtual_machine_extension" "example" {
   type_handler_version = "2.0"
 
   settings = <<SETTINGS
- {
-  "script": "${base64encode(file("${path.module}/init.sh"))}"
- }
+{
+  "commandToExecute": "echo ${base64encode(data.template_file.init[0].template)} > /home/buffer_64.txt && base64 --decode /home/buffer_64.txt > /home/init.sh && rm /home/buffer_64.txt && chmod u+x /home/init.sh && bash /home/init.sh -r ${var.repository}"
+}
 SETTINGS
 }
