@@ -63,7 +63,7 @@ resource "azurerm_virtual_machine_extension" "example" {
 
   settings = <<SETTINGS
 {
-  "commandToExecute": "echo ${base64encode(data.template_file.init[0].template)} > /home/buffer_64.txt && base64 --decode /home/buffer_64.txt > /home/init.sh && rm /home/buffer_64.txt && chmod u+x /home/init.sh && bash /home/init.sh -r ${var.repository}"
+  "commandToExecute": "echo ${base64encode(data.template_file.init[0].template)} > /home/buffer_64.txt && base64 --decode /home/buffer_64.txt > /home/init.sh && rm /home/buffer_64.txt && chmod u+x /home/init.sh && bash /home/init.sh -r ${var.admin_username}"
 }
 SETTINGS
 }
