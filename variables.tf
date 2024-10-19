@@ -50,10 +50,3 @@ variable "run_init_script" {
   description = "(Optional) Boolean flag to determine whether the Linux Virtual Machine should run the init script. Defaults to false. "
   default     = false
 }
-
-
-variable "repository" {
-  type        = string
-  description = "(Optional) The Github URL of the application."
-  default     = "https://github.com/mason1999/NGINX-todo-list.git"
-}
