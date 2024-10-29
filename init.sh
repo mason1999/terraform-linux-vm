@@ -1,8 +1,8 @@
 #! /usr/bin/bash
 
 install_dependencies() {
-    # Install nice to haves
-    apt-get update && apt-get install -y curl git iputils-ping tmux jq xclip
+    # Install nice to haves and dotnet-sdk
+    apt-get update && apt-get install -y curl git iputils-ping tmux jq xclip dotnet-sdk-8.0
     # Install neovim
     cd /
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
@@ -12,6 +12,11 @@ install_dependencies() {
     cd -
     # Install Az CLI
     curl -sL https://aka.ms/InstallAzureCLIDeb | bash # For AZ CLI
+    # Install core func tools
+    wget -q https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+    dpkg -i packages-microsoft-prod.deb
+    apt-get update
+    apt-get install -y azure-functions-core-tools-4
 }
 
 configure_neovim() {
