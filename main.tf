@@ -43,6 +43,14 @@ resource "azurerm_linux_virtual_machine" "this" {
     sku       = "22_04-lts-gen2"
     version   = "latest"
   }
+
+  dynamic "identity" {
+    for_each = var.identity == null ? [] : [var.identity]
+    content {
+      type         = identity.value.type
+      identity_ids = identity.value.identity_ids
+    }
+  }
 }
 
 data "template_file" "init" {

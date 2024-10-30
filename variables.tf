@@ -44,6 +44,19 @@ variable "admin_password" {
   description = "(Required) The Password which should be used for the local-administrator on this Linux Virtual Machine. Changing this forces a new resource to be created."
 }
 
+variable "identity" {
+  description = <<EOF
+  (Optional) A user assigned managed identity object block. Defaults to an empty object. The following attributes are supported
+
+  type - (Required) Specifies the type of managed service identity that should be configured on this linux virtual machine. Possible values are SystemAssigned, UserAssigned, SystemAssigned, UserAssigned (to enable both).
+  identity_ids - (Optional) Specifies a list of user assigned managed identity IDs to be assigned to this linux virtual machine. This is required when type is either UserAssgined or both UserAssigned and SystemAssigned.
+  EOF
+  type = object({
+    type         = string
+    identity_ids = optional(list(string), [])
+  })
+  default = null
+}
 
 variable "run_init_script" {
   type        = bool
